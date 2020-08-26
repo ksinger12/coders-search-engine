@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import RepositorySearch from "./components/repositorysearch";
 import UiCodeSearch from "./components/uicodesearch";
+import StackOverflowSearch from "./components/stackoverflowsearch";
 
 import "./App.css";
 import ApiCodeSearch from "./components/apicodesearch";
@@ -14,6 +15,7 @@ class App extends Component {
       uiCode: [],
       uiHtmlCode: [],
       apiCode: [],
+      stackoverflowData: [],
       hasErrors: false,
     };
   }
@@ -76,11 +78,25 @@ class App extends Component {
     event.preventDefault();
   }
 
+  grabStackOverFlowData(event) {
+    fetch(
+      "https://api.stackexchange.com/search/advanced?site=stackoverflow.com&q=" +
+        this.searchBox.value
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({ stackoverflowData: data.items ? data.items : [] });
+      })
+      .catch(() => this.setState({ hasErrors: true }));
+    event.preventDefault();
+  }
+
   onClick(event) {
     this.grabRepositories(event);
     this.grabUiCode(event);
     this.grabUiCodeHtml(event);
     this.grabApiCode(event);
+    this.grabStackOverFlowData(event);
   }
 
   render() {
@@ -107,6 +123,7 @@ class App extends Component {
         <RepositorySearch repositories={this.state.repositories} />
         <UiCodeSearch code={this.state.uiCode} />
         <ApiCodeSearch code={this.state.apiCode} />
+        <StackOverflowSearch questions={this.state.stackoverflowData} />
       </div>
     );
   }

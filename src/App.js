@@ -12,6 +12,7 @@ class App extends Component {
     this.state = {
       repositories: [],
       uiCode: [],
+      uiHtmlCode: [],
       apiCode: [],
       hasErrors: false,
     };
@@ -35,11 +36,26 @@ class App extends Component {
       "https://api.github.com/search/code?sort=stars&order=desc&q=" +
         this.searchBox.value +
         "+in:file+language:js+repo:" +
-        this.repositorybox.value //note that i am not searching html files which is important to know
+        this.repositorybox.value
     )
       .then((res) => res.json())
       .then((data) => {
         this.setState({ uiCode: data.items ? data.items : [] });
+      })
+      .catch(() => this.setState({ hasErrors: true }));
+    event.preventDefault();
+  }
+
+  grabUiCodeHtml(event) {
+    fetch(
+      "https://api.github.com/search/code?sort=stars&order=desc&q=" +
+        this.searchBox.value +
+        "+in:file+language:html+repo:" +
+        this.repositorybox.value
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({ uiHtmlCode: data.items ? data.items : [] });
       })
       .catch(() => this.setState({ hasErrors: true }));
     event.preventDefault();
@@ -63,10 +79,12 @@ class App extends Component {
   onClick(event) {
     this.grabRepositories(event);
     this.grabUiCode(event);
+    this.grabUiCodeHtml(event);
     this.grabApiCode(event);
   }
 
   render() {
+    this.state.uiCode = this.state.uiCode.concat(this.state.uiHtmlCode);
     return (
       <div className="App">
         <form>

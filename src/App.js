@@ -9,7 +9,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
-    this.state = { repositories: [], uiCode: [], apiCode: [] };
+    this.state = {
+      repositories: [],
+      uiCode: [],
+      apiCode: [],
+      hasErrors: false,
+    };
   }
 
   grabRepositories(event) {
@@ -20,7 +25,8 @@ class App extends Component {
       .then((res) => res.json())
       .then((data) => {
         this.setState({ repositories: data.items });
-      });
+      })
+      .catch(() => this.setState({ hasErrors: true }));
     event.preventDefault();
   }
 
@@ -29,12 +35,13 @@ class App extends Component {
       "https://api.github.com/search/code?sort=stars&order=desc&q=" +
         this.searchBox.value +
         "+in:file+language:js+repo:" +
-        this.repositorybox.value //note that i am not searching html values
+        this.repositorybox.value //note that i am not searching html files which is important to know
     )
       .then((res) => res.json())
       .then((data) => {
         this.setState({ uiCode: data.items });
-      });
+      })
+      .catch(() => this.setState({ hasErrors: true }));
     event.preventDefault();
   }
 
@@ -48,7 +55,8 @@ class App extends Component {
       .then((res) => res.json())
       .then((data) => {
         this.setState({ apiCode: data.items });
-      });
+      })
+      .catch(() => this.setState({ hasErrors: true }));
     event.preventDefault();
   }
 
@@ -87,5 +95,3 @@ class App extends Component {
 }
 
 export default App;
-
-//ksinger12/chvrchill-digital-website-design

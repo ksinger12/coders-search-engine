@@ -24,7 +24,7 @@ class App extends Component {
     )
       .then((res) => res.json())
       .then((data) => {
-        this.setState({ repositories: data.items });
+        this.setState({ repositories: data.items ? data.items : [] });
       })
       .catch(() => this.setState({ hasErrors: true }));
     event.preventDefault();
@@ -39,7 +39,7 @@ class App extends Component {
     )
       .then((res) => res.json())
       .then((data) => {
-        this.setState({ uiCode: data.items });
+        this.setState({ uiCode: data.items ? data.items : [] });
       })
       .catch(() => this.setState({ hasErrors: true }));
     event.preventDefault();
@@ -54,7 +54,7 @@ class App extends Component {
     )
       .then((res) => res.json())
       .then((data) => {
-        this.setState({ apiCode: data.items });
+        this.setState({ apiCode: data.items ? data.items : [] });
       })
       .catch(() => this.setState({ hasErrors: true }));
     event.preventDefault();

@@ -8,12 +8,13 @@ class UiCodeSearch extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="ui-code-base">
         <h2>Code - UI</h2>
         <ul>
           {this.getFileData().map((item, index) => (
             <li key={index}>
-              File Name:{item.name}; Repository: {item.repository.name}
+              File Name:<a href={item.html_url}>{item.name}</a> Repository:
+              <a href={item.repository.html_url}>{item.repository.name}</a>
             </li>
           ))}
         </ul>

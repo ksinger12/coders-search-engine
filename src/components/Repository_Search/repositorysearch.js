@@ -8,12 +8,14 @@ class RepositorySearch extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="repository-base">
         <div className="foundRepo">{this.props.name}</div>
         <h2>Repositories</h2>
         <ul>
           {this.getRepositories().map((item, index) => (
-            <li key={index}>{item.name}</li>
+            <li key={index}>
+              <a href={item.git_url}>{item.name}</a>
+            </li>
           ))}
         </ul>
       </div>

@@ -8,7 +8,7 @@ class StackOverflowSearch extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="stackoverflow-search-base">
         <h2>StackOverflow Search Results</h2>
         <ul>
           {this.getFileData().map((item, index) => (

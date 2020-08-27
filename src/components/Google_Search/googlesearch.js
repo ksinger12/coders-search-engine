@@ -8,7 +8,7 @@ class GoogleSearch extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="google-base">
         <h2>Google Search Results</h2>
         <ul>
           {this.getFileData().map((item, index) => (

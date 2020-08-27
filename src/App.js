@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import RepositorySearch from "./components/repositorysearch";
 import UiCodeSearch from "./components/uicodesearch";
 import StackOverflowSearch from "./components/stackoverflowsearch";
-
-import "./App.css";
 import ApiCodeSearch from "./components/apicodesearch";
+import GoogleSearch from "./components/googlesearch";
+import "./App.css";
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +15,8 @@ class App extends Component {
       uiCode: [],
       uiHtmlCode: [],
       apiCode: [],
-      stackoverflowData: [],
+      stackOverflowData: [],
+      googleSearchData: [],
       hasErrors: false,
     };
   }
@@ -85,7 +86,26 @@ class App extends Component {
     )
       .then((res) => res.json())
       .then((data) => {
-        this.setState({ stackoverflowData: data.items ? data.items : [] });
+        this.setState({ stackOverflowData: data.items ? data.items : [] });
+      })
+      .catch(() => this.setState({ hasErrors: true }));
+    event.preventDefault();
+  }
+
+  grabGoogleSearchData(event) {
+    const API_KEY = "AIzaSyBd30EtC8nI24tHoAedpwvPEh98Gfw6dME";
+    const SEARCH_ENGINE_ID = "94e8de49414233a43";
+    fetch(
+      "https://www.googleapis.com/customsearch/v1?key=" +
+        API_KEY +
+        "&cx=" +
+        SEARCH_ENGINE_ID +
+        "&q=" +
+        this.searchBox.value
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({ googleSearchData: data.items ? data.items : [] });
       })
       .catch(() => this.setState({ hasErrors: true }));
     event.preventDefault();
@@ -97,6 +117,7 @@ class App extends Component {
     this.grabUiCodeHtml(event);
     this.grabApiCode(event);
     this.grabStackOverFlowData(event);
+    this.grabGoogleSearchData(event);
   }
 
   render() {
@@ -123,10 +144,15 @@ class App extends Component {
         <RepositorySearch repositories={this.state.repositories} />
         <UiCodeSearch code={this.state.uiCode} />
         <ApiCodeSearch code={this.state.apiCode} />
-        <StackOverflowSearch questions={this.state.stackoverflowData} />
+        <StackOverflowSearch questions={this.state.stackOverflowData} />
+        <GoogleSearch sites={this.state.googleSearchData} />
       </div>
     );
   }
 }
 
 export default App;
+
+//google API key: AIzaSyBd30EtC8nI24tHoAedpwvPEh98Gfw6dME
+//google search engine id (cx): 94e8de49414233a43
+//google general url query: https://www.googleapis.com/customsearch/v1?key=INSERT_YOUR_API_KEY&cx=CUSTOM_SEARCH_ID&q=products

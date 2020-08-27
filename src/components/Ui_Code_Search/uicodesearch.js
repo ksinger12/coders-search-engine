@@ -1,6 +1,7 @@
 import React from "react";
+import "./uicodesearch.css";
 
-class ApiCodeSearch extends React.Component {
+class UiCodeSearch extends React.Component {
   getFileData() {
     return this.props.code;
   }
@@ -8,7 +9,7 @@ class ApiCodeSearch extends React.Component {
   render() {
     return (
       <div>
-        <h2>Code - API</h2>
+        <h2>Code - UI</h2>
         <ul>
           {this.getFileData().map((item, index) => (
             <li key={index}>
@@ -21,4 +22,4 @@ class ApiCodeSearch extends React.Component {
   }
 }
 
-export default ApiCodeSearch;
+export default UiCodeSearch;

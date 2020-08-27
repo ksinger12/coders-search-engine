@@ -1,14 +1,15 @@
 import React from "react";
+import "./stackoverflowsearch.css";
 
-class GoogleSearch extends React.Component {
+class StackOverflowSearch extends React.Component {
   getFileData() {
-    return this.props.sites;
+    return this.props.questions;
   }
 
   render() {
     return (
       <div>
-        <h2>Google Search Results</h2>
+        <h2>StackOverflow Search Results</h2>
         <ul>
           {this.getFileData().map((item, index) => (
             <li key={index}>
@@ -21,4 +22,4 @@ class GoogleSearch extends React.Component {
   }
 }
 
-export default GoogleSearch;
+export default StackOverflowSearch;

@@ -1,10 +1,16 @@
 import React, { Component } from "react";
-import RepositorySearch from "./components/repositorysearch";
-import UiCodeSearch from "./components/uicodesearch";
-import StackOverflowSearch from "./components/stackoverflowsearch";
-import ApiCodeSearch from "./components/apicodesearch";
-import GoogleSearch from "./components/googlesearch";
+import RepositorySearch from "./components/Repository_Search/repositorysearch";
+import UiCodeSearch from "./components/Ui_Code_Search/uicodesearch";
+import StackOverflowSearch from "./components/Stack_Overflow_Search/stackoverflowsearch";
+import ApiCodeSearch from "./components/Api_Code_Search/apicodesearch";
+import GoogleSearch from "./components/Google_Search/googlesearch";
 import "./App.css";
+
+/**
+ * To Get Your Own Api Key & Search Engine ID
+ * Follow the instructions at the link below:
+ * https://aquasar.io/articles/google-custom-search-in-a-react-redux-app
+ */
 
 class App extends Component {
   constructor(props) {
@@ -18,6 +24,8 @@ class App extends Component {
       stackOverflowData: [],
       googleSearchData: [],
       hasErrors: false,
+      GOOGLE_API_KEY: "",
+      GOOGLE_SEARCH_ENGINE_ID: "",
     };
   }
 
@@ -93,13 +101,11 @@ class App extends Component {
   }
 
   grabGoogleSearchData(event) {
-    const API_KEY = "type_api_key_here";
-    const SEARCH_ENGINE_ID = "type_search_engine_id_here";
     fetch(
       "https://www.googleapis.com/customsearch/v1?key=" +
-        API_KEY +
+        this.state.GOOGLE_API_KEY +
         "&cx=" +
-        SEARCH_ENGINE_ID +
+        this.state.GOOGLE_SEARCH_ENGINE_ID +
         "&q=" +
         this.searchBox.value
     )
@@ -152,7 +158,3 @@ class App extends Component {
 }
 
 export default App;
-
-//google API key: AIzaSyBd30EtC8nI24tHoAedpwvPEh98Gfw6dME
-//google search engine id (cx): 94e8de49414233a43
-//google general url query: https://www.googleapis.com/customsearch/v1?key=INSERT_YOUR_API_KEY&cx=CUSTOM_SEARCH_ID&q=products

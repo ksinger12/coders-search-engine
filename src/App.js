@@ -107,8 +107,6 @@ class App extends Component {
   }
 
   grabGoogleSearchData(event) {
-    this.state.GOOGLE_API_KEY = "AIzaSyBd30EtC8nI24tHoAedpwvPEh98Gfw6dME";
-    this.state.GOOGLE_SEARCH_ENGINE_ID = "94e8de49414233a43";
     fetch(
       `https://www.googleapis.com/customsearch/v1?key=${this.state.GOOGLE_API_KEY}&cx=${this.state.GOOGLE_SEARCH_ENGINE_ID}&q=${this.searchBox.value}`
     )
